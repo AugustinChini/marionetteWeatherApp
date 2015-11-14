@@ -37,18 +37,16 @@ HeaderLayout = Backbone.Marionette.ItemView.extend({
 
         // if enter is press
         if (e.which === ENTER_KEY) {
-
+            /*
             // we create new collection item
             this.collection.create({
                 city: inputText
-            });
+            });*/
 
+            // fill the item with the temp, desc and wind thanks to the API call
+            this.trigger("header_view:callWeatherAPI", inputText);
             //reset the input content
             this.ui.input.val('');
-
-            // show the main and the footer
-            this.trigger("header_view:showMain", this.collection);
-            this.trigger("header_view:showFooter", this.collection);
         }
         
     }
@@ -96,6 +94,9 @@ FooterLayout = Backbone.Marionette.ItemView.extend({
     onShow: function(){
 
         var list = this.ui.listContainer;
+
+        // reset the div
+        this.ui.listContainer.html('');
 
         // foreach item in the collection append element to listContainer
         this.collection.forEach(function (mod){
