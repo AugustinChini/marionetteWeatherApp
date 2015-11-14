@@ -6,8 +6,20 @@
     "backbone-routing": "^0.2.0",
     "backbone.localstorage": "^1.1.16",
     "backbone.marionette": "^2.4.3",
+    "bootstrap": "^3.3.5",
     "jquery": "^2.1.4"
   },
   "author": "CHINI Augustin",
-  "description": ""
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AugustinChini/marionetteWeatherApp.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AugustinChini/marionetteWeatherApp/issues"
+  },
+  "homepage": "https://github.com/AugustinChini/marionetteWeatherApp#readme",
+  "devDependencies": {
+    "bootstrap": "^3.3.5"
+  }
 }
