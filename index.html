@@ -11,7 +11,9 @@
         <!-- Root layout -->
         <section id="weatherApp">
             <section id="header"></section>
-            <section id="main"></section>
+            <section id="main">
+                <div id="itemContainer"></div>
+            </section>
             <footer id="footer">
                 <p>
                     Created by <a href="https://github.com/AugustinChini">Augustin CHINI</a>
@@ -34,8 +36,13 @@
             <h3 id="wind"></h3>
         </script>
 
-        <script type="text/html" id="list">
-            <div class="list-group">
+        <script type="text/html" id="item-layout">
+            <img id="delItem" alt="del icon" src="img/del_icon.png"/>
+            <button type="button" class="list-group-item"><%- temp %>° - <%- city %></button>
+        </script>
+
+        <script type="text/html" id="list-container">
+            <div id="list-items" class="list-group">
               
             </div>
         </script>

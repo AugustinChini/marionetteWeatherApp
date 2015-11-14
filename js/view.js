@@ -82,29 +82,46 @@ MainLayout = Backbone.Marionette.ItemView.extend({
 
 });
 
-// Main View
-FooterLayout = Backbone.Marionette.ItemView.extend({
+// Item view
+ItemView = Backbone.Marionette.ItemView.extend({
 
     // we need template
-    template: '#list',
+    template: '#item-layout',
 
-    // link to the view elements
     ui: {
-        listContainer: ".list-group"
+
+        del: '#delItem',
+        show: '.list-group-item'
     },
 
-    // react when a view has been shown
-    onShow: function(){
+    events: {
+        'click @ui.del': 'deleteModel',
+        'click @ui.show': 'showModel'
+    },
 
-        var list = this.ui.listContainer;
+    deleteModel: function () {
+        this.model.destroy();
+    },
 
-        // reset the div
-        this.ui.listContainer.html('');
-
-        // foreach item in the collection append element to listContainer
-        this.collection.forEach(function (mod){
-            list.append('<button type="button" class="list-group-item">' + mod.getTemp() + "° - " + mod.getCity() + '<img class="delItem" alt="del icon" src="img/del_icon.png"/></button>');
-        });
+    showModel: function () {
+        // fill and add the item with the temp, desc and wind thanks to the API call
+        this.trigger("header_view:callWeatherAPI", 1);
     }
 
+});
+
+
+// Footer View (father of Item view)
+FooterLayout = Backbone.Marionette.CompositeView.extend({
+
+        template: '#list-container',
+
+        childView: ItemView,
+
+        childViewContainer: '#list-items',
+
+        // link to the view elements
+        ui: {
+            listContainer: ".list-group"
+        },
 });

@@ -7,7 +7,7 @@ Controller = Backbone.Marionette.Object.extend({
 
         // view will need the event code so extend it
         _.extend(this, Backbone.Events);
-        _.bindAll(this, "showMain", "showFooter", "callWeatherAPI");
+        _.bindAll(this, "callWeatherAPI");
     },
 
     // start the controller by showing the appropriate views
@@ -26,7 +26,9 @@ Controller = Backbone.Marionette.Object.extend({
         {
             // if there is something on the list to display ... display it
             this.showHeader(this.cityList);
-            this.showMain(this.cityList, 1);
+
+            //index of the collection we want to display
+            this.showMain(this.cityList, 0);
             this.showFooter(this.cityList);
         }
 
@@ -43,8 +45,7 @@ Controller = Backbone.Marionette.Object.extend({
 
         });
 
-        header.bind("header_view:showMain", this.showMain);
-        header.bind("header_view:showFooter", this.showFooter);
+        //bind header view with the API call function
         header.bind("header_view:callWeatherAPI", this.callWeatherAPI);
 
         // use the root view to show the child view header
@@ -61,6 +62,8 @@ Controller = Backbone.Marionette.Object.extend({
             collection: cityList
         });
 
+        //set the selected index on the main view
+        //to choose the Item to display
         main.setIndex(index);
 
         // use the root view to show the child view header
