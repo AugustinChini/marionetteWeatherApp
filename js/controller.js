@@ -26,7 +26,7 @@ Controller = Backbone.Marionette.Object.extend({
         {
             // if there is something on the list to display ... display it
             this.showHeader(this.cityList);
-            this.showMain(this.cityList);
+            this.showMain(this.cityList, 1);
             this.showFooter(this.cityList);
         }
 
@@ -52,7 +52,7 @@ Controller = Backbone.Marionette.Object.extend({
     },
 
     // function which show the main weather page
-    showMain: function (cityList) {
+    showMain: function (cityList, index) {
 
         // instance of the main view
         var main = new MainLayout({
@@ -60,6 +60,8 @@ Controller = Backbone.Marionette.Object.extend({
             // link with the collection
             collection: cityList
         });
+
+        main.setIndex(index);
 
         // use the root view to show the child view header
         WeatherApp.root.showChildView('main', main);
@@ -91,14 +93,14 @@ Controller = Backbone.Marionette.Object.extend({
 
             cityList.create({
                 city: data.name,
-                temp: (data.main.temp-273,15),
+                temp: (data.main.temp - 273.15).toFixed(1),
                 desc: data.weather[0].description,
                 wind: data.wind.speed
             });
 
             // show the main and the footer
             ctrl.showFooter(cityList);
-            ctrl.showMain(cityList);
+            ctrl.showMain(cityList, cityList.length-1);
 
         });
     }

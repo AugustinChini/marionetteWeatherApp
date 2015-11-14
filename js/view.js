@@ -7,7 +7,8 @@ RootLayout = Backbone.Marionette.LayoutView.extend({
         header: '#header',
         main: '#main',
         footer: '#footer'
-    }
+    },
+
 });
 
 // Header View
@@ -37,13 +38,8 @@ HeaderLayout = Backbone.Marionette.ItemView.extend({
 
         // if enter is press
         if (e.which === ENTER_KEY) {
-            /*
-            // we create new collection item
-            this.collection.create({
-                city: inputText
-            });*/
 
-            // fill the item with the temp, desc and wind thanks to the API call
+            // fill and add the item with the temp, desc and wind thanks to the API call
             this.trigger("header_view:callWeatherAPI", inputText);
             //reset the input content
             this.ui.input.val('');
@@ -67,14 +63,21 @@ MainLayout = Backbone.Marionette.ItemView.extend({
         wind: '#wind',
     },
 
+    index: 0,
+
+    setIndex: function(i) {
+        this.index = i;
+    },
+
     // react when a view has been shown
-    onShow: function(){
+    onShow: function() {
 
-
-        this.ui.city.text(this.collection.at(0).getCity());
-        this.ui.temp.text(this.collection.at(0).getTemp());
-        this.ui.desc.text(this.collection.at(0).getDesc());
-        this.ui.wind.text(this.collection.at(0).getWind());
+        // fill the DOM elements with an item of the collection
+        // in function of a secified index
+        this.ui.city.text(this.collection.at(this.index).getCity());
+        this.ui.temp.text(this.collection.at(this.index).getTemp());
+        this.ui.desc.text(this.collection.at(this.index).getDesc());
+        this.ui.wind.text(this.collection.at(this.index).getWind());
     }
 
 });
@@ -100,7 +103,7 @@ FooterLayout = Backbone.Marionette.ItemView.extend({
 
         // foreach item in the collection append element to listContainer
         this.collection.forEach(function (mod){
-            list.append('<button type="button" class="list-group-item">' + mod.getCity() + '</button>');
+            list.append('<button type="button" class="list-group-item">' + mod.getTemp() + "° - " + mod.getCity() + '<img class="delItem" alt="del icon" src="img/del_icon.png"/></button>');
         });
     }
 
