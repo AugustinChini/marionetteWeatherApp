@@ -7,6 +7,37 @@ body {
     background-position: center center;
 }
 
+a {
+
+	text-decoration: underline;
+	color: #FFF;
+}
+
+input {
+
+	background: none;
+	border: 2px solid #FFF;
+	border-radius: 5px;
+}
+
+button {
+
+	background: none;
+	border-radius: 5px;
+	border: 2px solid #FFF;
+	border-radius: 5px;
+}
+
+#header {
+
+	text-align: center;
+}
+
+#gpsLink {
+
+	margin-left: 120px;
+}
+
 #mainContainer {
 
 	text-align: center;
@@ -15,19 +46,38 @@ body {
 #mainContainer p {
 
 	margin-top: -50px;
-	margin-left: 95px;
+	margin-left: 135px;
+}
+
+#temp {
+
+	margin-top: -35px;
+	margin-left: 45px;
+}
+
+#icon {
+
+	margin-left: -100px;
 }
 
 #add {
 
 	float: left;
     margin-left: 20px;
+    margin-right: -25px;
+}
+
+#city {
+
+	font-size: 70px;
+	margin-bottom: 25px;
 }
 
 .list-group-item{
 
-	background-color: rgb(155, 78, 121) !important;
+	background-color: #8B4873 !important;
 	color: white !important;
+	background: none !important;
 }
 
 #list-items {
