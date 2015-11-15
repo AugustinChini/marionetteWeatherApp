@@ -104,8 +104,9 @@ ItemView = Backbone.Marionette.ItemView.extend({
     },
 
     showModel: function () {
-        // fill and add the item with the temp, desc and wind thanks to the API call
-        this.trigger("header_view:callWeatherAPI", 1);
+
+        // call the parent event with the apropriate index of collection
+        this._parent.trigger("footer_view:setMainIndex", this._index);
     }
 
 });

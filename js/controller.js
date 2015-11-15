@@ -1,3 +1,8 @@
+// API ID if the current id is out of date please change this key
+var APP_ID = "2de143494c0b295cca9337e1e96b00e0";
+
+
+
 // Controller
 Controller = Backbone.Marionette.Object.extend({
 
@@ -7,7 +12,7 @@ Controller = Backbone.Marionette.Object.extend({
 
         // view will need the event code so extend it
         _.extend(this, Backbone.Events);
-        _.bindAll(this, "callWeatherAPI");
+        _.bindAll(this, "callWeatherAPI", "setMainIndex");
     },
 
     // start the controller by showing the appropriate views
@@ -70,6 +75,12 @@ Controller = Backbone.Marionette.Object.extend({
         WeatherApp.root.showChildView('main', main);
     },
 
+    // dislay the main view with the appropriate index
+    setMainIndex: function (i) {
+
+        this.showMain(this.cityList, i);
+    },
+
     // function which show the main weather page
     showFooter: function (cityList) {
 
@@ -80,19 +91,35 @@ Controller = Backbone.Marionette.Object.extend({
             collection: cityList
         });
 
+        list.bind("footer_view:setMainIndex", this.setMainIndex);
+
         // use the root view to show the child view header
         WeatherApp.root.showChildView('footer', list);
     },
 
-    callWeatherAPI: function(city) {
+    callWeatherAPI: function ( city ) {
 
-        var url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=2de143494c0b295cca9337e1e96b00e0";
+        var url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid="+APP_ID;
         var cityList = this.cityList;
         var ctrl = this;
 
         $.getJSON( url, {format: "json"})
         
         .done(function( data ) {
+
+            // destroy duplication in the list
+            var i = 0;
+
+            while ( i < cityList.length && i != -1) {
+                if(cityList.at(i).getCity() == data.name) {
+
+                    cityList.at(i).destroy();
+                    i = -2;
+                }
+
+                ++i;
+            }
+                
 
             cityList.create({
                 city: data.name,
