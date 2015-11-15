@@ -5,8 +5,9 @@ Model = Backbone.Model.extend({
     defaults: {
         city: '',
         temp: 0,
-        desc: 'Desc temp',
-        wind: 'wind .....'
+        desc: '',
+        wind: '',
+        icon: ''
     },
 
     // getters
@@ -24,6 +25,10 @@ Model = Backbone.Model.extend({
 
     getWind: function(){
         return this.get('wind');
+    },
+
+    getIcon: function(){
+        return this.get('icon');
     }
 
 

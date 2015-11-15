@@ -12,7 +12,7 @@ Controller = Backbone.Marionette.Object.extend({
 
         // view will need the event code so extend it
         _.extend(this, Backbone.Events);
-        _.bindAll(this, "callWeatherAPI", "setMainIndex");
+        _.bindAll(this, "callWeatherAPI", "setMainIndex", "callWeatherGpsAPI", "showHeader");
     },
 
     // start the controller by showing the appropriate views
@@ -30,8 +30,6 @@ Controller = Backbone.Marionette.Object.extend({
         else
         {
             // if there is something on the list to display ... display it
-            this.showHeader(this.cityList);
-
             //index of the collection we want to display
             this.showMain(this.cityList, 0);
             this.showFooter(this.cityList);
@@ -39,22 +37,36 @@ Controller = Backbone.Marionette.Object.extend({
 
     },
 
+    hideHeader: function () {
+
+        WeatherApp.root.header.$el.hide("slow");
+    },
+
     // function which show the header (the form input)
     showHeader: function (cityList) {
+        
+        // If header object is empty create an instance of it
+        if (WeatherApp.root.header.$el.length == 1) {
+            // instance of the header view
+            var header = new HeaderLayout({
 
-        // instance of the header view
-        var header = new HeaderLayout({
+                // link with the collection
+                collection: cityList
 
-            // link with the collection
-            collection: cityList
+            });
 
-        });
+            //bind header view with the API call function
+            header.bind("header_view:callWeatherAPI", this.callWeatherAPI);
+            header.bind("header_view:callWeatherGpsAPI", this.callWeatherGpsAPI);
 
-        //bind header view with the API call function
-        header.bind("header_view:callWeatherAPI", this.callWeatherAPI);
+            // use the root view to show the child view header
+            WeatherApp.root.showChildView('header', header);
+        }
 
-        // use the root view to show the child view header
-        WeatherApp.root.showChildView('header', header);
+        // else juste show elements
+        else{
+            WeatherApp.root.header.$el.show("slow");
+        }
     },
 
     // function which show the main weather page
@@ -66,6 +78,9 @@ Controller = Backbone.Marionette.Object.extend({
             // link with the collection
             collection: cityList
         });
+
+        //bind header view with the API call function
+        main.bind("main_view:showHeader", this.showHeader);
 
         //set the selected index on the main view
         //to choose the Item to display
@@ -100,16 +115,40 @@ Controller = Backbone.Marionette.Object.extend({
     callWeatherAPI: function ( city ) {
 
         var url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid="+APP_ID;
-        var cityList = this.cityList;
         var ctrl = this;
 
         $.getJSON( url, {format: "json"})
         
         .done(function( data ) {
 
-            // destroy duplication in the list
+            ctrl.addItemList(data, ctrl);
+        });
+    },
+
+    callWeatherGpsAPI: function ( coor ) {
+
+        var url = "http://api.openweathermap.org/data/2.5/weather?" + coor + "&appid="+APP_ID;
+        var ctrl =this;
+
+        $.getJSON( url, {format: "json"})
+        
+        .done(function( data ) {
+
+            ctrl.addItemList(data, ctrl);
+        });
+    },
+
+
+    addItemList: function (data, ctrl) {
+
+        // if the query return a success code
+        if(data.cod == "200") {
+
             var i = 0;
 
+            var cityList = ctrl.cityList;
+
+            // destroy duplication in the list
             while ( i < cityList.length && i != -1) {
                 if(cityList.at(i).getCity() == data.name) {
 
@@ -119,20 +158,23 @@ Controller = Backbone.Marionette.Object.extend({
 
                 ++i;
             }
-                
 
             cityList.create({
                 city: data.name,
                 temp: (data.main.temp - 273.15).toFixed(1),
                 desc: data.weather[0].description,
-                wind: data.wind.speed
+                wind: data.wind.speed,
+                icon: data.weather[0].icon
             });
 
             // show the main and the footer
             ctrl.showFooter(cityList);
             ctrl.showMain(cityList, cityList.length-1);
-
-        });
+        }
+        else
+        {
+            alert("The form does not appear correctly filled.");
+        }
     }
 
 

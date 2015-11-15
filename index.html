@@ -24,12 +24,22 @@
 
         <!-- Templates -->
         <script type="text/html" id="template-form">
+
             <input id="input-city" placeholder="What city do you want ?" autofocus>
-            <button type="button">Search</button>
+            <button id="city-button"type="button">Search</button><br/>
+            <a id="gpsLink" href="#">GPS coordinates ?</a>
+            <div id="gps-input-container">
+
+                <input id="input-gps" placeholder="ex. lat=35&lon=139" >
+                <button id="gps-button" type="button">Search</button>
+
+            </div>
         </script>
 
         <script type="text/html" id="main-display">
+            <img id="add" alt="add Weather" src="img/add.png"/>
             <h1 id="city"></h1>
+            <div id="icon"></div>
             <h1 id="temp"></h1>
             <p>C <br/> F </p>
             <h3 id="desc"></h3>
@@ -37,14 +47,14 @@
         </script>
 
         <script type="text/html" id="item-layout">
+
             <img id="delItem" alt="del icon" src="img/del_icon.png"/>
             <button type="button" class="list-group-item"><%- temp %>° - <%- city %></button>
         </script>
 
         <script type="text/html" id="list-container">
-            <div id="list-items" class="list-group">
-              
-            </div>
+
+            <div id="list-items" class="list-group"></div>
         </script>
         <!-- End templates -->
 
