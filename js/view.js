@@ -138,6 +138,7 @@ MainLayout = Backbone.Marionette.ItemView.extend({
         desc: '#desc',
         wind: '#wind',
         icon: '#icon',
+        google: "#googleIframContrainer",
         add: '#add'
     },
 
@@ -166,9 +167,11 @@ MainLayout = Backbone.Marionette.ItemView.extend({
         this.ui.city.text(this.collection.at(this.index).getCity());
         this.ui.temp.text(this.collection.at(this.index).getTemp());
         this.ui.desc.text(this.collection.at(this.index).getDesc());
-        this.ui.wind.text(this.collection.at(this.index).getWind());
+        this.ui.wind.text(this.collection.at(this.index).getWind()+ " Km/h");
         this.ui.icon.html('<img id="iconImg" alt="icon Weather" src="' + 
             this.collection.at(this.index).getIcon()+'.png"/>');
+        /*this.ui.google.html('<iframe id="googleIframe" style="border: 3px solid #DDD;border-radius: 10px;-webkit-border-radius: 10px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCmusPkr-1TUAlI6mlGuLrp7mdkh09uSW4&amp;q=' + this.collection.at(this.index).getCity()
+         + '" allowfullscreen="true" frameborder="0" height="250" width="100%"></iframe>');*/
     }
 
 });

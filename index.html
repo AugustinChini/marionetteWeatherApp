@@ -11,9 +11,7 @@
         <!-- Root layout -->
         <section id="weatherApp">
             <section id="header"></section>
-            <section id="main">
-                <div id="itemContainer"></div>
-            </section>
+            <section id="main"></section>
             <footer id="footer">
                 <p>
                     Created by <a href="https://github.com/AugustinChini">Augustin CHINI</a>
@@ -37,13 +35,16 @@
         </script>
 
         <script type="text/html" id="main-display">
-            <img id="add" alt="add Weather" src="img/add.png"/>
-            <h1 id="city"></h1>
-            <div id="icon"></div>
-            <h1 id="temp"></h1>
-            <p>C <br/> F </p>
-            <h3 id="desc"></h3>
-            <h3 id="wind"></h3>
+            <div id="mainContainer">
+                <img id="add" alt="add Weather" src="img/add.png"/>
+                <h1 id="city"></h1>
+                <div id="icon"></div>
+                <h1 id="temp"></h1>
+                <p>C <br/> F </p>
+                <h3 id="desc"></h3>
+                <h3 id="wind"></h3>
+                <div id="googleIframContrainer"></div>
+            </div>
         </script>
 
         <script type="text/html" id="item-layout">

@@ -1,3 +1,40 @@
+body {
+	color: #FFF;
+	background-color:white;
+	background-image:url(../img/background.jpg);
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+#mainContainer {
+
+	text-align: center;
+}
+
+#mainContainer p {
+
+	margin-top: -50px;
+	margin-left: 95px;
+}
+
+#add {
+
+	float: left;
+    margin-left: 20px;
+}
+
+.list-group-item{
+
+	background-color: rgb(155, 78, 121) !important;
+	color: white !important;
+}
+
+#list-items {
+
+	margin-top: 10%;
+}
+
 #footer img
 {
 	float: right;
