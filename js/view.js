@@ -1,3 +1,5 @@
+var tempType = 'cel';
+
 // Root layout
 RootLayout = Backbone.Marionette.LayoutView.extend({
 
@@ -139,12 +141,18 @@ MainLayout = Backbone.Marionette.ItemView.extend({
         wind: '#wind',
         icon: '#icon',
         google: "#googleIframContrainer",
-        add: '#add'
+        add: '#add',
+        cel: '#cel',
+        far: '#far',
+        showGoogle: "#showGoogle"
     },
 
     // event
     events: {
-        'click @ui.add': 'showHeader'
+        'click @ui.add': 'showHeader',
+        'click @ui.cel': function (){this.convert('cel');},
+        'click @ui.far': function (){this.convert('far');},
+        'click @ui.showGoogle': 'showGoogleMap'
     },
 
     index: 0,
@@ -159,6 +167,11 @@ MainLayout = Backbone.Marionette.ItemView.extend({
         this.trigger("main_view:showHeader");
     },
 
+    showGoogleMap: function () {
+
+        this.ui.google.show();
+    },
+
     // react when a view has been shown
     onShow: function() {
 
@@ -168,10 +181,58 @@ MainLayout = Backbone.Marionette.ItemView.extend({
         this.ui.temp.text(this.collection.at(this.index).getTemp());
         this.ui.desc.text(this.collection.at(this.index).getDesc());
         this.ui.wind.text(this.collection.at(this.index).getWind()+ " Km/h");
-        this.ui.icon.html('<img id="iconImg" alt="icon Weather" src="' + 
+        this.ui.icon.html('<img id="iconImg" alt="icon Weather" src="img/' + 
             this.collection.at(this.index).getIcon()+'.png"/>');
-        /*this.ui.google.html('<iframe id="googleIframe" style="border: 3px solid #DDD;border-radius: 10px;-webkit-border-radius: 10px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCmusPkr-1TUAlI6mlGuLrp7mdkh09uSW4&amp;q=' + this.collection.at(this.index).getCity()
-         + '" allowfullscreen="true" frameborder="0" height="250" width="100%"></iframe>');*/
+        this.ui.google.html('<iframe id="googleIframe" style="border: 3px solid #DDD;border-radius: 10px;-webkit-border-radius: 10px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCmusPkr-1TUAlI6mlGuLrp7mdkh09uSW4&amp;q=' + this.collection.at(this.index).getCity()
+         + '" allowfullscreen="true" frameborder="0" height="250" width="100%"></iframe>');
+        this.ui.google.hide();
+    },
+
+    convert: function (type) {
+
+        if (type == 'cel' && tempType != 'cel') {
+
+            var main = this;
+
+            this.collection.each(function(model) {
+
+                var far = model.getTemp();
+
+                far = ((far - 32)/1.8).toFixed(1);
+
+                model.set({temp: far});
+
+                tempType = 'cel'
+
+                main.trigger("footer_view:setMainIndex", main.index);
+
+                return false;
+            });
+        }
+        
+        if (type == 'far' && tempType != 'far')
+        {
+
+            var main = this;
+
+            this.collection.each(function(model) {
+
+                var cel = model.getTemp();
+
+                cel = ((cel * 1.8)+32).toFixed(1);
+
+                model.set({temp: cel});
+
+                tempType = 'far';
+
+                main.trigger("footer_view:setMainIndex", main.index);
+
+                return false;
+
+            });
+        }
+
+
     }
 
 });

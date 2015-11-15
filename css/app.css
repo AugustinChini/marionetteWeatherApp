@@ -26,6 +26,7 @@ button {
 	border-radius: 5px;
 	border: 2px solid #FFF;
 	border-radius: 5px;
+	padding: 6px;
 }
 
 #header {
@@ -43,10 +44,22 @@ button {
 	text-align: center;
 }
 
-#mainContainer p {
+#cel {
 
-	margin-top: -50px;
-	margin-left: 135px;
+	margin-top: -56px;
+	margin-left: 150px;
+	cursor: pointer;
+}
+
+#far {
+
+	margin-left: 150px;
+	cursor: pointer;
+}
+
+#iconImg {
+
+	width: 35px;
 }
 
 #temp {
@@ -63,14 +76,27 @@ button {
 #add {
 
 	float: left;
-    margin-left: 20px;
-    margin-right: -25px;
+	margin-left: 30px;
+	margin-right: -25px;
+	margin-top: -20px;
 }
 
 #city {
 
 	font-size: 70px;
 	margin-bottom: 25px;
+	margin-top: 5%;
+}
+
+#input-city {
+
+	margin-top: 25%;
+	padding: 6px;
+}
+
+#input-gps {
+
+	padding: 6px;
 }
 
 .list-group-item{
@@ -80,9 +106,15 @@ button {
 	background: none !important;
 }
 
-#list-items {
+#wind {
 
-	margin-top: 10%;
+	margin-bottom: 10%;
+}
+
+#showGoogle {
+	float: left;
+	margin-left: 2%;
+	margin-top: -30px;
 }
 
 #footer img
@@ -91,10 +123,17 @@ button {
 	position: relative;
 	z-index: 10;
 	margin-top: 10px;
-	margin-right: 5px;
+	margin-right: 15px;
 	cursor: pointer;
 }
 #footer img:hover
 {
 	opacity: 0.5;
+}
+
+#footer p {
+
+	text-align: center;
+	margin-top: 25px;
+	margin-left: 67px;
 }

@@ -81,6 +81,7 @@ Controller = Backbone.Marionette.Object.extend({
 
         //bind header view with the API call function
         main.bind("main_view:showHeader", this.showHeader);
+        main.bind("footer_view:setMainIndex", this.setMainIndex);
 
         //set the selected index on the main view
         //to choose the Item to display
