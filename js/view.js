@@ -63,6 +63,7 @@ HeaderLayout = Backbone.Marionette.ItemView.extend({
                 this.trigger("header_view:callWeatherAPI", inputText);
                 //reset the input content
                 this.ui.input.val('');
+                this.$el.hide("slow");
             }
 
         }
@@ -78,6 +79,7 @@ HeaderLayout = Backbone.Marionette.ItemView.extend({
                 this.trigger("header_view:callWeatherGpsAPI", inputText);
                 //reset the input content
                 this.ui.input.val('');
+                this.$el.hide("slow");
             }
         }
     },
